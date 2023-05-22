@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск работы</title>
+    <link rel="stylesheet" href="style_job_search.css"> <!-- Подключение файла стилей -->
+    <script src="script.js"></script>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a id="home-link" href="#">Главная</a></li>
+            <li><a href="#" id="job_search">Поиск работы</a></li>
+            <li><a href="#" id ="employers">Работодатели</a></li>
+            <li><a href="#" id ="about-link">О нас</a></li>
+            <li><a href="#" id = "login-link">Войти</a></li>
+            <li><a href="#" id="register-link">Зарегистрироваться</a></li>
+            <li><a href="#" id="my_account">Мой аккаунт</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="job-search-section">
+    <h1>Поиск работы</h1>
+    <form id="jobSearchForm" >
+        <label for="jobTitle">Название вакансии:</label>
+        <input type="text" id="jobTitle" name="jobTitle">
+
+        <label for="location">Местоположение:</label>
+        <input type="text" id="location" name="location">
+
+        <button type="submit">Найти вакансии</button>
+    </form>
+
+
+</section>
+
+<div id="vacancyResults" class="vacancy-results"></div>
+
+
+<!-- Шаблон для каждой вакансии -->
+<template id="vacancyCardTemplate">
+    <div class="vacancy-card">
+        <h3 class="vacancy-title"></h3>
+        <p class="vacancy-salary"></p>
+        <p class="vacancy-location"></p>
+    </div>
+</template>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#jobSearchForm').submit(function(event) {
+        event.preventDefault();
+
+        var jobTitle = $('#jobTitle').val();
+        var location = $('#location').val();
+
+        $.ajax({
+            url: '/api/vacancies',
+            type: 'GET',
+            data: {
+                jobTitle: jobTitle,
+                location: location
+            },
+            success: function(data) {
+                $('#vacancyResults').empty();
+
+                data.forEach(function(vacancy) {
+                    var vacancyCardTemplate = $('#vacancyCardTemplate').html();
+                    var vacancyCard = $(vacancyCardTemplate);
+
+                    vacancyCard.find('.vacancy-title').text(vacancy.jobTitle);
+                    vacancyCard.find('.vacancy-salary').text(vacancy.salary);
+                    vacancyCard.find('.vacancy-location').text(vacancy.location);
+
+                    $('#vacancyResults').append(vacancyCard);
+                });
+            },
+            error: function() {
+                console.log('Ошибка при выполнении запроса');
+            }
+        });
+    });
+</script>
+
+
+<footer>
+    <p>&copy; 2023 Job Search. Все права защищены.</p>
+</footer>
+</body>
+</html>

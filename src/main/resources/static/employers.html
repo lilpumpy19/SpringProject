@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Работодатели</title>
+  <link rel="stylesheet" href="style_employers.css"> <!-- Подключение файла стилей -->
+  <script src="script.js"></script>
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li><a id="home-link" href="#">Главная</a></li>
+      <li><a href="#" id="job_search">Поиск работы</a></li>
+      <li><a href="#" id ="employers">Работодатели</a></li>
+      <li><a href="#" id ="about-link">О нас</a></li>
+      <li><a href="#" id = "login-link">Войти</a></li>
+      <li><a href="#" id="register-link">Зарегистрироваться</a></li>
+      <li><a href="#" id="my_account">Мой аккаунт</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="employers-section">
+  <h1>Разместите вакансию</h1>
+  <form>
+    <label for="jobTitle">Название вакансии:</label>
+    <input type="text" id="jobTitle" name="jobTitle" required>
+
+    <label for="companyName">Название компании:</label>
+    <input type="text" id="companyName" name="companyName" required>
+
+    <label for="location">Местоположение:</label>
+    <input type="text" id="location" name="location" required>
+
+    <label for="jobDescription">Описание вакансии:</label>
+    <textarea id="jobDescription" name="jobDescription" required></textarea>
+
+    <button type="submit">Разместить вакансию</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2023 Job Search. Все права защищены.</p>
+</footer>
+</body>
+</html>
