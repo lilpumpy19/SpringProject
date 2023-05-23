@@ -78,38 +78,98 @@
 </template>
 
 
-<script>
-    $(document).ready(function() {
-        var jobTitle = $('#jobTitle').val();
-        var location = $('#location').val();
+<script>$(document).ready(function() {
+    var jobTitleInput = $('#jobTitle');
+    var locationInput = $('#location');
 
+    // По умолчанию отображаем все вакансии
+    getVacancies();
+
+    $('#sortByLocation').click(function() {
+        getVacanciesByLocation();
+    });
+
+    $('#sortByJobTitle').click(function() {
+        getVacanciesByJobTitle();
+    });
+
+    $('#sortByJobTitleAndLocation').click(function() {
+        getVacanciesByJobTitleAndLocation();
+    });
+
+    function getVacancies() {
         $.ajax({
-            url: '/api/vacancies',
+            url: '/vacancies',
             type: 'GET',
-            data: {
-                jobTitle: jobTitle,
-                location: location
-            },
             success: function(data) {
-                $('#vacancyResults').empty();
-
-                data.forEach(function(vacancy) {
-                    var vacancyCardTemplate = $('#vacancyCardTemplate').html();
-                    var vacancyCard = $(vacancyCardTemplate);
-
-                    vacancyCard.find('.vacancy-title').text('Вакансия: ' + vacancy.jobTitle);
-                    vacancyCard.find('.vacancy-salary').text('Зарплата: ' + vacancy.salary);
-                    vacancyCard.find('.vacancy-location').text('Город: ' + vacancy.location);
-                    vacancyCard.find('.vacancy-image').attr('src', vacancy.img);
-
-                    $('#vacancyResults').append(vacancyCard);
-                });
+                displayVacancies(data);
             },
             error: function() {
                 console.log('Ошибка при выполнении запроса');
             }
         });
-    });
+    }
+
+    function getVacanciesByLocation() {
+        var location = locationInput.val();
+        $.ajax({
+            url: '/vacancies?location=' + location,
+            type: 'GET',
+            success: function(data) {
+                displayVacancies(data);
+            },
+            error: function() {
+                console.log('Ошибка при выполнении запроса');
+            }
+        });
+    }
+
+    function getVacanciesByJobTitle() {
+        var jobTitle = jobTitleInput.val();
+        $.ajax({
+            url: '/vacancies?jobTitle=' + jobTitle,
+            type: 'GET',
+            success: function(data) {
+                displayVacancies(data);
+            },
+            error: function() {
+                console.log('Ошибка при выполнении запроса');
+            }
+        });
+    }
+
+    function getVacanciesByJobTitleAndLocation() {
+        var jobTitle = jobTitleInput.val();
+        var location = locationInput.val();
+        $.ajax({
+            url: '/vacancies?jobTitle=' + jobTitle + '&location=' + location,
+            type: 'GET',
+            success: function(data) {
+                displayVacancies(data);
+            },
+            error: function() {
+                console.log('Ошибка при выполнении запроса');
+            }
+        });
+    }
+
+    function displayVacancies(vacancies) {
+        $('#vacancyResults').empty();
+
+        vacancies.forEach(function(vacancy) {
+            var vacancyCardTemplate = $('#vacancyCardTemplate').html();
+            var vacancyCard = $(vacancyCardTemplate);
+
+            vacancyCard.find('.vacancy-title').text('Вакансия: ' + vacancy.jobTitle);
+            vacancyCard.find('.vacancy-salary').text('Зарплата: ' + vacancy.salary);
+            vacancyCard.find('.vacancy-location').text('Город: ' + vacancy.location);
+            vacancyCard.find('.vacancy-image').attr('src', vacancy.img);
+
+            $('#vacancyResults').append(vacancyCard);
+        });
+    }
+});
+
 </script>
 
 
