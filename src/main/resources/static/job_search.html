@@ -59,9 +59,7 @@
 
         <button type="submit">Найти вакансии</button>
     </form>
-    <button id="sortByLocation">Сортировать по местоположению</button>
-    <button id="sortByJobTitle">Сортировать по названию вакансии</button>
-    <button id="sortByJobTitleAndLocation">Сортировать по названию и местоположению</button>
+
 
 
 
@@ -88,17 +86,29 @@
     // По умолчанию отображаем все вакансии
     getVacancies();
 
-    $('#sortByLocation').click(function() {
-        getVacanciesByLocation();
+    // Обработчик события на кнопке "Найти вакансии"
+    $('#jobSearchForm').submit(function(e) {
+        e.preventDefault();
+
+
+        console.log(jobTitleInput.val())
+        console.log(locationInput.val())
+        console.log(locationInput.val()==='')
+        console.log(locationInput.val()!=='')
+
+
+        if (jobTitleInput.val()!=='' && locationInput.val()!=='') {
+            getVacanciesByJobTitleAndLocation();
+        } else if (jobTitleInput.val()!=='') {
+            getVacanciesByJobTitle();
+        } else if (locationInput.val()!=='') {
+            getVacanciesByLocation();
+        } else {
+            getVacancies();
+        }
     });
 
-    $('#sortByJobTitle').click(function() {
-        getVacanciesByJobTitle();
-    });
 
-    $('#sortByJobTitleAndLocation').click(function() {
-        getVacanciesByJobTitleAndLocation();
-    });
 
     function getVacancies() {
         console.log('getVacancies')
