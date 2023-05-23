@@ -15,11 +15,11 @@ public class VacancyConfig {
         return args -> {
             Vacancy vacancy = new Vacancy("грузчик","саратов",20000);
             Vacancy vacancy1 = new Vacancy("повар","саратов",30000);
-            Vacancy vacancy2 = new Vacancy("разработчик it","саратов",80000);
+            Vacancy vacancy2 = new Vacancy("D:\\xxx\\JavaProject\\SpringProject\\src\\main\\resources\\static\\img\\04_yCyaRwe.jpg","разработчик it","саратов",80000);
             Vacancy vacancy3 = new Vacancy("разработчик it","москва",100000);
             Vacancy vacancy4= new Vacancy("экономист","саратов",66000);
             Vacancy vacancy5 = new Vacancy("разработчик it","спб",120000);
-            Vacancy vacancy6 = new Vacancy("уборщик","саратов",10000);
+            Vacancy vacancy6 = new Vacancy("https://png.pngtree.com/png-clipart/20190619/original/pngtree-community-service-youth-volunteer-college-students-help-png-image_3966124.jpg","уборщик","саратов",10000);
             repository.saveAll(List.of(vacancy,vacancy1,vacancy2,vacancy4,vacancy5,vacancy6,vacancy3));
         };
     }

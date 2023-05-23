@@ -35,6 +35,24 @@ public class Vacancy {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column
+    private String img;
+
+    public Vacancy(String img, String jobTitle, String location, int salary) {
+        this.img = img;
+        this.jobTitle = jobTitle;
+        this.location = location;
+        this.salary = salary;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Column(nullable = false)
     private String jobTitle;
 
