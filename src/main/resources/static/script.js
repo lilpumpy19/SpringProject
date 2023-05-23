@@ -79,18 +79,3 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'job_search.html';
     });
 });
-
-data.forEach(function(vacancy) {
-    if (vacancy.title) {
-        var vacancyCardTemplate = $('#vacancyCardTemplate').html();
-        var vacancyCard = $(vacancyCardTemplate);
-
-        vacancyCard.find('.vacancy-title').text(vacancy.title);
-        vacancyCard.find('.vacancy-salary').text(vacancy.salary);
-        vacancyCard.find('.vacancy-location').text(vacancy.location);
-
-        $('#vacancyResults').append(vacancyCard);
-    } else {
-        console.log('Отсутствует название вакансии');
-    }
-});

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +59,10 @@
 
         <button type="submit">Найти вакансии</button>
     </form>
+    <button id="sortByLocation">Сортировать по местоположению</button>
+    <button id="sortByJobTitle">Сортировать по названию вакансии</button>
+    <button id="sortByJobTitleAndLocation">Сортировать по названию и местоположению</button>
+
 
 
 </section>
@@ -98,8 +101,9 @@
     });
 
     function getVacancies() {
+        console.log('getVacancies')
         $.ajax({
-            url: '/vacancies',
+            url: '/api/vacancies',
             type: 'GET',
             success: function(data) {
                 displayVacancies(data);
@@ -111,9 +115,10 @@
     }
 
     function getVacanciesByLocation() {
+        console.log('getVacanciesByLocation')
         var location = locationInput.val();
         $.ajax({
-            url: '/vacancies?location=' + location,
+            url: '/api/vacancies?location=' + location,
             type: 'GET',
             success: function(data) {
                 displayVacancies(data);
@@ -125,9 +130,10 @@
     }
 
     function getVacanciesByJobTitle() {
+        console.log('getVacanciesByJobTitle')
         var jobTitle = jobTitleInput.val();
         $.ajax({
-            url: '/vacancies?jobTitle=' + jobTitle,
+            url: '/api/vacancies?jobTitle=' + jobTitle,
             type: 'GET',
             success: function(data) {
                 displayVacancies(data);
@@ -139,10 +145,11 @@
     }
 
     function getVacanciesByJobTitleAndLocation() {
+        console.log('getVacanciesByJobTitleAndLocation')
         var jobTitle = jobTitleInput.val();
         var location = locationInput.val();
         $.ajax({
-            url: '/vacancies?jobTitle=' + jobTitle + '&location=' + location,
+            url: '/api/vacancies?jobTitle=' + jobTitle + '&location=' + location,
             type: 'GET',
             success: function(data) {
                 displayVacancies(data);
@@ -154,6 +161,9 @@
     }
 
     function displayVacancies(vacancies) {
+        console.log('displayVacancies')
+
+        // Очищаем контейнер vacancyResults
         $('#vacancyResults').empty();
 
         vacancies.forEach(function(vacancy) {
@@ -163,11 +173,13 @@
             vacancyCard.find('.vacancy-title').text('Вакансия: ' + vacancy.jobTitle);
             vacancyCard.find('.vacancy-salary').text('Зарплата: ' + vacancy.salary);
             vacancyCard.find('.vacancy-location').text('Город: ' + vacancy.location);
-            vacancyCard.find('.vacancy-image').attr('src', vacancy.img);
+            vacancyCard.find('.vacancy-image').attr('src', vacancy.img); // исправлено название поля
 
+            // Добавляем новую карточку вакансии в контейнер vacancyResults
             $('#vacancyResults').append(vacancyCard);
         });
     }
+
 });
 
 </script>
