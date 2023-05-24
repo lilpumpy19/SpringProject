@@ -68,30 +68,3 @@ footer {
     padding: 10px;
     text-align: center;
 }
-#vacancyResults {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.vacancy-card {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 20px;
-    width: calc(33.33% - 20px);
-    box-sizing: border-box;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.vacancy-results {
-    margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-    .vacancy-card {
-        width: 100%;
-    }
-}

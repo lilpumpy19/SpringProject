@@ -79,3 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'job_search.html';
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var goMain = document.getElementById('add_vacancy');
+
+    goMain.addEventListener('click', function(event) {
+        event.preventDefault(); // Отменяем стандартное действие перехода по ссылке
+
+        // Здесь можно выполнить действия по переходу на главную страницу, например:
+        window.location.href = 'index.html';
+    });
+});
