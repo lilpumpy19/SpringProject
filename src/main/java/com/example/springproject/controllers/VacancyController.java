@@ -1,8 +1,10 @@
 package com.example.springproject.controllers;
 
+import com.example.springproject.models.User;
 import com.example.springproject.models.Vacancy;
 import com.example.springproject.services.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,5 +31,10 @@ public class VacancyController {
         } else {
             return vacancyService.getVacancies();
         }
+    }
+
+    @PostMapping()
+    public void registerNewVacancy(Vacancy vacancy) {
+        vacancyService.addNewVacancy(vacancy);
     }
 }
