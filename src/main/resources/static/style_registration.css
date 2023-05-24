@@ -1,27 +1,24 @@
-/* styles.css */
-
-/* Общие стили */
 body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
 }
 
-/* Шапка */
 header {
     background-color: #333;
     color: #fff;
-    padding: 10px;
+    padding: 20px;
 }
 
 nav ul {
-    list-style: none;
+    list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex;
 }
 
 nav ul li {
+    display: inline;
     margin-right: 10px;
 }
 
@@ -29,7 +26,6 @@ nav ul li a {
     color: #fff;
     text-decoration: none;
 }
-
 /* Регистрационная форма */
 .registration-form {
     max-width: 400px;
