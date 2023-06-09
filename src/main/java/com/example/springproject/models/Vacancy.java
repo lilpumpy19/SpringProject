@@ -1,9 +1,13 @@
 package com.example.springproject.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "vacancies")
+@Data
 public class Vacancy {
     @Id
     @SequenceGenerator(
@@ -65,56 +69,13 @@ public class Vacancy {
     @Column
     private int salary;
 
-    public int getSalary() {
-        return salary;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "vacancy_applicants",
+            joinColumns = @JoinColumn(name = "vacancy_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> applicants;
 
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    // Дополнительные поля вакансии (требования, условия работы, зарплата и т.д.)
-
-    // Геттеры и сеттеры, конструкторы и другие необходимые методы
 }
-

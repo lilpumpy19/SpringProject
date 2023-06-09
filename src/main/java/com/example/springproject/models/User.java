@@ -1,9 +1,13 @@
 package com.example.springproject.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
     @Id
     @SequenceGenerator(
@@ -26,6 +30,13 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @OneToOne(mappedBy = "user")
+    private Resume resume;
+
+    @ManyToMany(mappedBy = "applicants")
+    private List<Vacancy> appliedVacancies;
+
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -34,33 +45,5 @@ public class User {
 
     public User() {
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-// Дополнительные поля пользователя (имя, фамилия, контактная информация и т.д.)
-
-    // Геттеры и сеттеры, конструкторы и другие необходимые методы
 }
 
