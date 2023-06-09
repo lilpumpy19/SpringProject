@@ -78,7 +78,7 @@
 
 
 <<!-- Шаблон для каждой вакансии -->
-<template id="vacancyCardTemplate">
+<template id="vacancyCardTemplate" >
     <div class="vacancy-card">
         <h3 class="vacancy-title"></h3>
         <p class="vacancy-salary"></p>
@@ -193,11 +193,20 @@
             vacancyCard.find('.vacancy-salary').text('Зарплата: ' + vacancy.salary);
             vacancyCard.find('.vacancy-location').text('Город: ' + vacancy.location);
             vacancyCard.find('.vacancy-image').attr('src', vacancy.img); // исправлено название поля
+            vacancyCard.attr('data-vacancy-id', vacancy.id);
 
             // Добавляем новую карточку вакансии в контейнер vacancyResults
             $('#vacancyResults').append(vacancyCard);
+
         });
     }
+    $('#vacancyResults').on('click', '.vacancy-card', function() {
+        // Получаем ID выбранной вакансии
+        var vacancyId = $(this).data('vacancy-id');
+
+        // Перенаправляем пользователя на страницу vacancy.html с параметром vacancyId
+        window.location.href = 'vacancy.html?vacancyId=' + vacancyId;
+    });
 
 });
 

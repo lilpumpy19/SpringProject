@@ -6,6 +6,8 @@
     <title>Вакансия</title>
     <link rel="stylesheet" href="style_vacancy.css"> <!-- Подключение файла стилей -->
     <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
 <header>
@@ -29,17 +31,46 @@
             <img src="" alt="Изображение вакансии">
         </div>
         <div class="vacancy-details">
-            <p><strong>Местоположение:</strong> Москва</p>
-            <p><strong>Зарплата:</strong> $5000 в месяц</p>
-            <p><strong>Описание:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nibh
-                ligula. Vestibulum lacinia mauris vitae felis interdum, eget egestas nulla mollis. Aenean finibus
-                eleifend ex, non ullamcorper tellus rhoncus vel. Suspendisse ultrices felis id posuere efficitur.
-                Suspendisse faucibus rutrum maximus. Nunc sollicitudin consequat sapien, at iaculis mi dictum eget.
-            </p>
+            <p><strong>Местоположение:</strong> <span class="vacancy-location"></span></p>
+            <p><strong>Зарплата:</strong> <span class="vacancy-salary"></span></p>
+            <p><strong>Описание:</strong> <span class="vacancy-description"></span></p>
         </div>
     </div>
     <button class="apply-button">Откликнуться</button>
 </section>
+
+
+<script>
+    $(document).ready(function() {
+        // Извлекаем значение параметра vacancyId из URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var vacancyId = urlParams.get('vacancyId');
+
+        // Выполняем AJAX-запрос для получения информации о вакансии
+        $.ajax({
+            url: '/api/vacancies/' + vacancyId,
+            type: 'GET',
+            success: function(vacancy) {
+                displayVacancy(vacancy);
+            },
+            error: function() {
+                console.log('Ошибка при выполнении запроса');
+            }
+        });
+
+        function displayVacancy(vacancy) {
+            // Отображаем информацию о вакансии на странице
+            $('.vacancy-section h1').text(vacancy.jobTitle);
+            $('.vacancy-section .vacancy-image img').attr('src', vacancy.img);
+            $('.vacancy-section .vacancy-details .vacancy-location').text(vacancy.location);
+            $('.vacancy-section .vacancy-details .vacancy-salary').text(vacancy.salary);
+            $('.vacancy-section .vacancy-details .vacancy-description').text(vacancy.description);
+        }
+
+        // ...
+    });
+
+</script>
 
 <footer>
     <p>&copy; 2023 Job Search. Все права защищены.</p>

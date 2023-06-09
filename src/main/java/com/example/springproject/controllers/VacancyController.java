@@ -5,12 +5,14 @@ import com.example.springproject.models.Vacancy;
 import com.example.springproject.services.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
 @RequestMapping("/api/vacancies")
 public class VacancyController {
+
     private VacancyService vacancyService;
 
     @Autowired
@@ -30,6 +32,16 @@ public class VacancyController {
             return vacancyService.getVacanciesByLocation(location);
         } else {
             return vacancyService.getVacancies();
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Vacancy> getVacancyById(@PathVariable Long id) {
+        Vacancy vacancy = vacancyService.getVacancyById(id);
+        if (vacancy != null) {
+            return ResponseEntity.ok(vacancy);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

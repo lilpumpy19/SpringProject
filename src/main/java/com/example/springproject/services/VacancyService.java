@@ -37,4 +37,8 @@ public class VacancyService {
     public void addNewVacancy(Vacancy vacancy) {
         vacancyRepository.save(vacancy);
     }
+
+    public Vacancy getVacancyById(Long id) {
+        return vacancyRepository.findById(id).orElse(null);
+    }
 }
