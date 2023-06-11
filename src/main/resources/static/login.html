@@ -6,6 +6,7 @@
   <title>Вход</title>
   <link rel="stylesheet" href="style_login.css"> <!-- Подключение файла стилей -->
   <script src="script.js"></script> <!-- Подключение файла скрипта -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <header>
@@ -24,17 +25,47 @@
 
 <div class="login-form">
   <h1>Вход</h1>
-  <form id="login-form">
+  <form id="login-form" action="/api/auth/authenticate" method="post">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
 
     <label for="password">Пароль:</label>
     <input type="password" id="password" name="password" required>
 
-    <button type="submit">Войти</button>
+    <button type="submit" id="auth">Войти</button>
   </form>
 </div>
+<script>
+  $(document).ready(function() {
 
+    $('#auth').click(function(e) {
+      e.preventDefault();
+
+      var email = $('#email').val();
+      var password = $('#password').val();
+
+
+      $.ajax({
+        url: '/api/auth/authenticate',
+        type: 'POST',
+        contentType: 'application/json', // Указываем тип контента как JSON
+        data: JSON.stringify({ // Сериализуем данные в JSON
+          email: email,
+          password: password
+        }),
+        success: function(data) {
+          console.log('все норм');
+        },
+        error: function() {
+          console.log('Ошибка при выполнении запроса');
+        }
+      });
+    });
+
+  });
+
+
+</script>
 <footer>
   <p>&copy; 2023 Job Search. Все права защищены.</p>
 </footer>
