@@ -90,3 +90,14 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'index.html';
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var exit = document.getElementById('exit');
+
+    exit.addEventListener('click', function(event) {
+        event.preventDefault(); // Отменяем стандартное действие перехода по ссылке
+        localStorage.clear();
+        // Здесь можно выполнить действия по переходу на главную страницу, например:
+        window.location.href = 'index.html';
+    });
+});

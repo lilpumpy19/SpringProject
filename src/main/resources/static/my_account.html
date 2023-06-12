@@ -6,6 +6,7 @@
   <title>Мой аккаунт</title>
   <link rel="stylesheet" href="style_my_account.css"> <!-- Подключение файла стилей -->
   <script src="script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <header>
@@ -18,6 +19,7 @@
       <li><a href="#" id = "login-link">Войти</a></li>
       <li><a href="#" id="register-link">Зарегистрироваться</a></li>
       <li><a href="#" id="my_account">Мой аккаунт</a></li>
+      <li><a href="#" id="exit">Выход</a></li>
     </ul>
   </nav>
 </header>
@@ -26,15 +28,52 @@
   <h1>Мой аккаунт</h1>
   <div class="user-details">
     <h2>Данные пользователя</h2>
-    <p><strong>Имя:</strong> Name</p>
-    <p><strong>Email:</strong> email</p>
-    <p><strong>Возраст:</strong> Возраст</p>
-    <p><strong>Мое резюме </strong> .....</p>
-    <p><strong>Мои вакансии </strong> .....</p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
 
     <!-- Другие данные пользователя -->
   </div>
 </section>
+<script>
+  $(document).ready(function() {
+    console.log("aaaa")
+
+    // Функция для получения данных пользователя по токену
+    function getUserData(token) {
+      $.ajax({
+        url: '/api/user/user',
+        type: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token // Передаем токен в заголовке запроса
+        },
+        success: function(response) {
+          console.log("fffffa")
+          // Обновляем данные пользователя на странице
+
+          $('#email').text(response.email);
+
+          // Дополнительные обновления данных пользователя
+          // ...
+        },
+        error: function() {
+          console.log('Ошибка при получении данных пользователя');
+        }
+      });
+    }
+
+    // Получаем токен из localStorage
+    var token = localStorage.getItem('token');
+
+    // Проверяем наличие токена
+    if (token) {
+      // Вызываем функцию для получения данных пользователя
+      getUserData(token);
+    } else {
+      // Редирект на страницу авторизации, если токен отсутствует
+      window.location.href = 'login.html';
+    }
+
+  });
+</script>
 
 <footer>
   <p>&copy; 2023 Job Search. Все права защищены.</p>

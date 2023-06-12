@@ -19,6 +19,7 @@
       <li><a href="#" id = "login-link">Войти</a></li>
       <li><a href="#" id="register-link">Зарегистрироваться</a></li>
       <li><a href="#" id="my_account">Мой аккаунт</a></li>
+      <li><a href="#" id="exit">Выход</a></li>
     </ul>
   </nav>
 </header>
@@ -53,8 +54,13 @@
           email: email,
           password: password
         }),
-        success: function(data) {
-          console.log('все норм');
+        success: function(response) {
+          // Сохраняем токен в localStorage
+          localStorage.setItem('token', response.token);
+          console.log('Токен сохранен в localStorage');
+          console.log(response.token);
+          // Дополнительные действия после успешной аутентификации
+          // ...
         },
         error: function() {
           console.log('Ошибка при выполнении запроса');
@@ -63,7 +69,6 @@
     });
 
   });
-
 
 </script>
 <footer>
