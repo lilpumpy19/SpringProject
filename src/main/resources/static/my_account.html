@@ -35,7 +35,7 @@
 </section>
 <script>
   $(document).ready(function() {
-    console.log("aaaa")
+
 
     // Функция для получения данных пользователя по токену
     function getUserData(token) {
@@ -46,7 +46,7 @@
           Authorization: 'Bearer ' + token // Передаем токен в заголовке запроса
         },
         success: function(response) {
-          console.log("fffffa")
+
           // Обновляем данные пользователя на странице
 
           $('#email').text(response.email);
