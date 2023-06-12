@@ -40,7 +40,7 @@
     // Функция для получения данных пользователя по токену
     function getUserData(token) {
       $.ajax({
-        url: '/api/user/user',
+        url: '/api/user/get',
         type: 'GET',
         headers: {
           Authorization: 'Bearer ' + token // Передаем токен в заголовке запроса

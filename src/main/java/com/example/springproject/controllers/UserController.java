@@ -36,7 +36,7 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/get")
     public ResponseEntity<User> getUser(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
         User user = userService.getUserByUsername(username);

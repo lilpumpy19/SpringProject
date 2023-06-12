@@ -60,7 +60,7 @@
           console.log('Токен сохранен в localStorage');
           console.log(response.token);
           // Дополнительные действия после успешной аутентификации
-          // ...
+          window.location.href = 'index.html';
         },
         error: function() {
           console.log('Ошибка при выполнении запроса');
