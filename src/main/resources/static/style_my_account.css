@@ -60,3 +60,37 @@ footer {
     padding: 10px;
     text-align: center;
 }
+/* Стили для формы резюме */
+.resume-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.resume-form input,
+.resume-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+.resume-form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Стили для кнопки "Создать резюме" */
+.create-resume-button button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.create-resume-button button:hover {
+    background-color: #d32f2f;
+}
+

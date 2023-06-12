@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Мой аккаунт</title>
-  <link rel="stylesheet" href="style_my_account.css"> <!-- Подключение файла стилей -->
+  <link rel="stylesheet" href="style_my_account.css">
+  <script src="script_my_account.js" defer></script> <!-- Подключение файла стилей -->
   <script src="script.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -32,6 +33,39 @@
 
     <!-- Другие данные пользователя -->
   </div>
+
+  <div class="resume-form" id="resume-form">
+    <h2>Форма резюме</h2>
+    <form id="create-resume-form" action="/api/resumes" method="post">
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="surname">Фамилия:</label>
+      <input type="text" id="surname" name="surname" required>
+
+      <label for="patronymic">Отчество:</label>
+      <input type="text" id="patronymic" name="patronymic">
+
+      <label for="date">Дата рождения:</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email_resume" name="email" required>
+
+      <label for="myPhoto">Фото:</label>
+      <input type="text" id="myPhoto" name="myPhoto" required>
+
+      <label for="aboutMe">О себе:</label>
+      <textarea id="aboutMe" name="aboutMe" required></textarea>
+
+      <button type="submit">Сохранить</button>
+    </form>
+  </div>
+
+  <div class="create-resume-button" id="create-resume-button">
+    <button id="create-resume">Создать резюме</button>
+  </div>
+
 </section>
 <script>
   $(document).ready(function() {
@@ -71,6 +105,8 @@
       // Редирект на страницу авторизации, если токен отсутствует
       window.location.href = 'login.html';
     }
+
+
 
   });
 </script>

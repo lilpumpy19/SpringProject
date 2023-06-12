@@ -18,18 +18,7 @@ public class ResumeService {
         this.userRepository = userRepository;
     }
 
-    public Resume createResume(Long userId, String title, String description,int experience) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Resume resume = new Resume();
-        resume.setUser(user);
-        resume.setTitle(title);
-        resume.setDescription(description);
-        resume.setExperience(experience);
-
-        return resumeRepository.save(resume);
-    }
 
     public void deleteResume(Long id){
         boolean exists = resumeRepository.existsById(id);
