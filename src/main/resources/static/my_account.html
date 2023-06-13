@@ -36,8 +36,9 @@
 
   <div class="resume-form" id="resume-form">
     <h2>Форма резюме</h2>
-    <form id="create-resume-form" action="/api/resumes" method="post">
-      <label for="name">Имя:</label>
+    <form id="create-resume-form" action="/api/resumes/save" method="post" enctype="application/json">
+
+    <label for="name">Имя:</label>
       <input type="text" id="name" name="name" required>
 
       <label for="surname">Фамилия:</label>
@@ -49,16 +50,13 @@
       <label for="date">Дата рождения:</label>
       <input type="date" id="date" name="date" required>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email_resume" name="email" required>
-
       <label for="myPhoto">Фото:</label>
       <input type="text" id="myPhoto" name="myPhoto" required>
 
       <label for="aboutMe">О себе:</label>
       <textarea id="aboutMe" name="aboutMe" required></textarea>
 
-      <button type="submit">Сохранить</button>
+      <button id="add_resume" type="submit">Сохранить</button>
     </form>
   </div>
 
@@ -84,6 +82,7 @@
           // Обновляем данные пользователя на странице
 
           $('#email').text(response.email);
+          console.log(response.id);
 
           // Дополнительные обновления данных пользователя
           // ...
@@ -110,7 +109,50 @@
 
   });
 </script>
+<script>
+  $(document).ready(function() {
+    var token = localStorage.getItem('token');
 
+    $('#add_resume').click(function(e) {
+      e.preventDefault();
+
+      var name = $('#name').val();
+      var surname = $('#surname').val();
+      var patronymic = $('#patronymic').val();
+      var email = $('#email').text();
+      var date = $('#date').val();
+      var aboutMe = $('#aboutMe').val();
+      var myPhoto = $('#myPhoto').val();
+
+      var requestData = {
+        name: name,
+        surname: surname,
+        patronymic: patronymic,
+        date: date,
+        email: email,
+        myPhoto: myPhoto,
+        aboutMe: aboutMe
+      };
+
+      $.ajax({
+        url: '/api/resumes/save',
+        type: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token
+        },
+        contentType: 'application/json', // Установите тип контента в application/json
+        data: JSON.stringify(requestData), // Преобразуйте данные в JSON-строку
+        success: function(data) {
+          window.location.href = 'my_account.html';
+        },
+        error: function() {
+          console.log('Ошибка при выполнении запроса');
+        }
+      });
+    });
+  });
+
+</script>
 <footer>
   <p>&copy; 2023 Job Search. Все права защищены.</p>
 </footer>

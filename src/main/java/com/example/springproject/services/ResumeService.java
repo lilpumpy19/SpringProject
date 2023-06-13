@@ -1,7 +1,6 @@
 package com.example.springproject.services;
 
 import com.example.springproject.models.Resume;
-import com.example.springproject.models.User;
 import com.example.springproject.repositories.ResumeRepository;
 import com.example.springproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,10 @@ public class ResumeService {
         resumeRepository.deleteById(id);
     }
 
+    public Resume save(Resume resume) {
+        resumeRepository.save(resume);
+        return resume;
+    }
 
 
     // Другие методы, связанные с резюме

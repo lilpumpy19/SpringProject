@@ -1,5 +1,6 @@
 package com.example.springproject.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,11 +41,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "user")
     private Resume resume;
 
-    @ManyToMany(mappedBy = "applicants")
-    private List<Vacancy> appliedVacancies;
+//    @ManyToMany(mappedBy = "applicants")
+//    private List<Vacancy> appliedVacancies;
 
     @Enumerated(EnumType.STRING)
     private Role role;

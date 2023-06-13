@@ -1,9 +1,11 @@
 package com.example.springproject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -19,6 +21,7 @@ public class Resume {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Column(nullable = false)
@@ -30,6 +33,7 @@ public class Resume {
     private String patronymic;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @Column(nullable = false)
