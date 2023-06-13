@@ -27,6 +27,23 @@ public class ResumeController {
         this.resumeService = resumeService;
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<Resume> getUserResume(Authentication authentication) {
+        // Получаем аутентифицированного пользователя из контекста безопасности
+        User user = (User) authentication.getPrincipal();
+
+        // Получаем резюме пользователя по его идентификатору
+        Resume resume = resumeService.getResumeByUserId(user.getId());
+
+        if (resume != null) {
+            // Резюме найдено, возвращаем успешный ответ и резюме пользователя
+            return ResponseEntity.ok(resume);
+        } else {
+            // Резюме не найдено, возвращаем ответ с кодом 404
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Resume> createResume(@RequestBody ResumeCreateRequest request) {
         // Получите текущего пользователя из вашей системы аутентификации
@@ -65,6 +82,17 @@ public class ResumeController {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 @Data
 @AllArgsConstructor

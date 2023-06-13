@@ -32,6 +32,10 @@ public class ResumeService {
         return resume;
     }
 
+    public Resume getResumeByUserId(Long id) {
+        return resumeRepository.findByUserId(id);
+    }
+
 
     // Другие методы, связанные с резюме
 }

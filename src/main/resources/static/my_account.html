@@ -34,8 +34,10 @@
     <!-- Другие данные пользователя -->
   </div>
 
+  <div id="resume-content"></div>
   <div class="resume-form" id="resume-form">
     <h2>Форма резюме</h2>
+
     <form id="create-resume-form" action="/api/resumes/save" method="post" enctype="application/json">
 
     <label for="name">Имя:</label>
@@ -150,6 +152,61 @@
         }
       });
     });
+  });
+
+</script>
+<script>
+  $(document).ready(function() {
+    var token = localStorage.getItem('token');
+
+    // Функция для получения резюме пользователя по токену
+    function getUserResume(token) {
+      $.ajax({
+        url: '/api/resumes/get',
+        type: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token
+        },
+        success: function(response) {
+          if (response) {
+// Преобразование даты рождения в формат "число-месяц-год"
+              var birthDate = new Date(response.date);
+              var day = ("0" + birthDate.getDate()).slice(-2); // Добавляем ведущий ноль к числу дня
+              var month = ("0" + (birthDate.getMonth() + 1)).slice(-2); // Добавляем ведущий ноль к числу месяца
+              var year = birthDate.getFullYear();
+
+              var formattedBirthDate = `${day}-${month}-${year}`;
+
+// Отображение отформатированной даты рождения
+              var resumeHtml = `
+              <p><strong>Имя:</strong> ${response.name}</p>
+              <p><strong>Фамилия:</strong> ${response.surname}</p>
+              <p><strong>Отчество:</strong> ${response.patronymic}</p>
+              <p><strong>Дата рождения:</strong> ${formattedBirthDate}</p>
+              <img src="${response.myPhoto}" alt="Фото">
+              <p><strong>О себе:</strong> ${response.aboutMe}</p>
+`;
+              $('#resume-content').html(resumeHtml);
+            $('#create-resume-button').hide();
+          } else {
+            // Резюме не найдено, отобразить кнопку "Создать резюме"
+            $('#create-resume-button').show();
+          }
+        },
+        error: function() {
+          console.log('Ошибка при получении резюме');
+        }
+      });
+    }
+
+    // Проверяем наличие токена
+    if (token) {
+      // Вызываем функцию для получения резюме пользователя
+      getUserResume(token);
+    } else {
+      // Редирект на страницу авторизации, если токен отсутствует
+      window.location.href = 'login.html';
+    }
   });
 
 </script>
