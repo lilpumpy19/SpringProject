@@ -34,8 +34,9 @@ public class VacancyService {
         return vacancyRepository.findByJobTitleAndLocation(jobTitle, location);
     }
 
-    public void addNewVacancy(Vacancy vacancy) {
+    public Vacancy addNewVacancy(Vacancy vacancy) {
         vacancyRepository.save(vacancy);
+        return vacancy;
     }
 
     public Vacancy getVacancyById(Long id) {

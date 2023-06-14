@@ -49,10 +49,6 @@
   $(document).ready(function() {
     var token = localStorage.getItem('token');
 
-    if (!token) {
-      window.location.href = 'login.html';
-    }
-
     $('#add_vacancy').click(function(e) {
       e.preventDefault();
 
@@ -63,27 +59,32 @@
       var salary = $('#salary').val();
 
 
+
+      var requestData = {
+        jobTitle: jobTitle,
+        location: location,
+        description: description,
+        img: img,
+        salary: salary
+      };
+
       $.ajax({
         url: '/api/vacancies',
         type: 'POST',
-        data: {
-          jobTitle: jobTitle,
-          location: location,
-          description: description,
-          img: img,
-          salary: salary
+        headers: {
+          Authorization: 'Bearer ' + token
         },
+        contentType: 'application/json', // Установите тип контента в application/json
+        data: JSON.stringify(requestData), // Преобразуйте данные в JSON-строку
         success: function(data) {
-          window.location.href = 'index.html';
+          window.location.href = 'job_search.html';
         },
         error: function() {
           console.log('Ошибка при выполнении запроса');
         }
       });
     });
-
   });
-
 
 </script>
 <footer>
@@ -91,3 +92,4 @@
 </footer>
 </body>
 </html>
+

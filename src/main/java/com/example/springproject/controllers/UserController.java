@@ -5,7 +5,9 @@ import com.example.springproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +43,21 @@ public class UserController {
         String username = userDetails.getUsername();
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok(user);
+    }
+
+    protected static User getCurrentUser() {
+        // Получить объект аутентификации из контекста SecurityContextHolder
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Проверить, что аутентификация прошла успешно и аутентифицированный объект не является анонимным
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            // Получить объект пользователя из аутентификации
+            User user = (User) authentication.getPrincipal();
+            return user;
+        }
+
+        // Если текущего пользователя нет или он является анонимным, вернуть null или выполнить другое действие по вашему усмотрению
+        return null;
     }
 
 

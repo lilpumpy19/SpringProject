@@ -47,7 +47,7 @@ public class ResumeController {
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Resume> createResume(@RequestBody ResumeCreateRequest request) {
         // Получите текущего пользователя из вашей системы аутентификации
-        User currentUser = getCurrentUser();
+        User currentUser = UserController.getCurrentUser();
 
         // Создайте объект Resume и установите значения полей из запроса
         Resume resume = new Resume();
@@ -66,20 +66,7 @@ public class ResumeController {
         return ResponseEntity.ok(savedResume);
     }
 
-    private User getCurrentUser() {
-        // Получить объект аутентификации из контекста SecurityContextHolder
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Проверить, что аутентификация прошла успешно и аутентифицированный объект не является анонимным
-        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
-            // Получить объект пользователя из аутентификации
-            User user = (User) authentication.getPrincipal();
-            return user;
-        }
-
-        // Если текущего пользователя нет или он является анонимным, вернуть null или выполнить другое действие по вашему усмотрению
-        return null;
-    }
 
 }
 
