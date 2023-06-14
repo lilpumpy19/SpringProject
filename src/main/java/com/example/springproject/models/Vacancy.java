@@ -74,9 +74,11 @@ public class Vacancy {
     @JoinTable(
             name = "vacancy_applicants",
             joinColumns = @JoinColumn(name = "vacancy_id"),
-            inverseJoinColumns = @JoinColumn(name = "resume_id")
+            inverseJoinColumns = @JoinColumn(name = "resume_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"vacancy_id", "resume_id"})
     )
     private List<Resume> applicants;
+
 
 
 }

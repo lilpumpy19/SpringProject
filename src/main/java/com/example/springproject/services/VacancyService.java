@@ -42,4 +42,8 @@ public class VacancyService {
     public Vacancy getVacancyById(Long id) {
         return vacancyRepository.findById(id).orElse(null);
     }
+
+    public List<Vacancy> getVacanciesByUserId(Long id) {
+        return vacancyRepository.findByUserId(id);
+    }
 }

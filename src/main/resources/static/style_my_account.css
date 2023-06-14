@@ -89,7 +89,14 @@ footer {
     border: none;
     cursor: pointer;
 }
-
+#view-vacancies{
+    margin: 5px;
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
 .create-resume-button button:hover {
     background-color: #d32f2f;
 }

@@ -43,6 +43,12 @@ public class VacancyController {
         }
     }
 
+    @GetMapping("/myVacancies")
+    public List<Vacancy> getVacanciesByUserId(@AuthenticationPrincipal UserDetails userDetails) {
+        User currentUser = userService.getUserByUsername(userDetails.getUsername());
+        return vacancyService.getVacanciesByUserId(currentUser.getId());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Vacancy> getVacancyById(@PathVariable Long id) {
         Vacancy vacancy = vacancyService.getVacancyById(id);

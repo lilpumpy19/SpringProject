@@ -8,6 +8,40 @@
   <script src="script_my_account.js" defer></script> <!-- Подключение файла стилей -->
   <script src="script.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .vacancy-card img {
+      max-width: 100%;
+      max-height: 200px; /* Задайте желаемую максимальную высоту */
+      object-fit: cover;
+    }
+    .vacancy-card {
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 20px;
+      margin-left: 20px;
+      width: calc(33.33% - 20px);
+      box-sizing: border-box;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+
+    #vacancyResults {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: left;
+
+    }
+
+
+    @media (max-width: 768px) {
+      .vacancy-card {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -30,6 +64,18 @@
   <div class="user-details">
     <h2>Данные пользователя</h2>
     <p><strong>Email:</strong> <span id="email"></span></p>
+    <button id="view-vacancies">Показать мои вакансии</button>
+
+    <div id="vacancyResults"></div>
+
+    <template id="vacancyCardTemplate" >
+      <div class="vacancy-card">
+        <h3 class="vacancy-title"></h3>
+        <p class="vacancy-salary"></p>
+        <p class="vacancy-location"></p>
+        <img class="vacancy-image" src="" alt="Vacancy Image">
+      </div>
+    </template>
 
     <!-- Другие данные пользователя -->
   </div>
@@ -206,6 +252,54 @@
     } else {
       // Редирект на страницу авторизации, если токен отсутствует
       window.location.href = 'login.html';
+    }
+  });
+
+</script>
+<script>
+  $(document).ready(function() {
+    // При нажатии на кнопку с id="view-vacancies" вызывается функция getVacanciesByUserId
+    $('#view-vacancies').click(function() {
+      getVacanciesByUserId();
+    });
+
+    function getVacanciesByUserId() {
+      var token = localStorage.getItem('token');
+      console.log('getVacanciesByUserId');
+      $.ajax({
+        url: '/api/vacancies/myVacancies',
+        type: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token
+        },
+        success: function(data) {
+          displayVacancies(data);
+        },
+        error: function() {
+          console.log('Ошибка при выполнении запроса');
+        }
+      });
+    }
+
+    function displayVacancies(vacancies) {
+      console.log('displayVacancies');
+
+      // Очищаем контейнер vacancyResults
+      $('#vacancyResults').empty();
+
+      vacancies.forEach(function(vacancy) {
+        var vacancyCardTemplate = $('#vacancyCardTemplate').html();
+        var vacancyCard = $(vacancyCardTemplate);
+
+        vacancyCard.find('.vacancy-title').text('Вакансия: ' + vacancy.jobTitle);
+        vacancyCard.find('.vacancy-salary').text('Зарплата: ' + vacancy.salary);
+        vacancyCard.find('.vacancy-location').text('Город: ' + vacancy.location);
+        vacancyCard.find('.vacancy-image').attr('src', vacancy.img); // исправлено название поля
+        vacancyCard.attr('data-vacancy-id', vacancy.id);
+
+        // Добавляем новую карточку вакансии в контейнер vacancyResults
+        $('#vacancyResults').append(vacancyCard);
+      });
     }
   });
 

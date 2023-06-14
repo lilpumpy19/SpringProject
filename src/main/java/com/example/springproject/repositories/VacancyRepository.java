@@ -12,4 +12,5 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     List<Vacancy> findByJobTitle(String jobTitle);
     List<Vacancy> findByJobTitleAndLocation(String jobTitle, String location);
 
+    List<Vacancy> findByUserId(Long id);
 }
