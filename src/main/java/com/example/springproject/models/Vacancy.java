@@ -70,7 +70,7 @@ public class Vacancy {
     @Column
     private int salary;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "vacancy_applicants",
             joinColumns = @JoinColumn(name = "vacancy_id"),
