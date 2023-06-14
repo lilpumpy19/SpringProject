@@ -1,6 +1,7 @@
 package com.example.springproject.controllers;
 
 import com.example.springproject.models.Resume;
+import com.example.springproject.models.ResumeCreateRequest;
 import com.example.springproject.models.User;
 import com.example.springproject.services.ResumeService;
 import lombok.AllArgsConstructor;
@@ -81,22 +82,3 @@ public class ResumeController {
 
 
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class ResumeCreateRequest {
-    private String name;
-    private String surname;
-    private String patronymic;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date;
-    private String email;
-    private String myPhoto;
-    private String aboutMe;
-
-    // Геттеры и сеттеры для всех полей
-
-    // Конструкторы
-
-    // Дополнительные методы, если необходимо
-}

@@ -1,8 +1,7 @@
 package com.example.springproject.controllers;
 
-import com.example.springproject.models.Resume;
-import com.example.springproject.models.User;
-import com.example.springproject.models.Vacancy;
+import com.example.springproject.models.*;
+import com.example.springproject.services.UserService;
 import com.example.springproject.services.VacancyService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +20,12 @@ public class VacancyController {
 
     private VacancyService vacancyService;
 
+    private UserService userService;
+
     @Autowired
-    public VacancyController(VacancyService vacancyService) {
+    public VacancyController(VacancyService vacancyService,UserService userService) {
         this.vacancyService = vacancyService;
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -67,14 +71,27 @@ public class VacancyController {
 
         return ResponseEntity.ok(savedVacancy);
     }
-}
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class VacancyRequest {
-    private String jobTitle;
-    private String location;
-    private String description;
-    private String img;
-    private int salary;
+
+    @PostMapping("/{vacancyId}/apply")
+    public ResponseEntity<String> applyToVacancy(@PathVariable Long vacancyId, @AuthenticationPrincipal UserDetails userDetails) {
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
+
+        if (vacancy == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Получение текущего пользователя
+        User currentUser = userService.getUserByUsername(userDetails.getUsername());
+
+        // Создание объекта резюме
+        Resume resume = currentUser.getResume();
+
+        // Заполните остальные поля резюме, используя данные из объекта User или запроса
+
+        vacancy.getApplicants().add(resume);
+        vacancyService.addNewVacancy(vacancy);
+
+        return ResponseEntity.ok("Резюме успешно добавлено");
+    }
+
 }

@@ -37,7 +37,7 @@
             <p><strong>Описание:</strong> <span class="vacancy-description"></span></p>
         </div>
     </div>
-    <button class="apply-button">Откликнуться</button>
+    <button class="apply-button" id="apply-button">Откликнуться</button>
 </section>
 
 
@@ -68,9 +68,47 @@
             $('.vacancy-section .vacancy-details .vacancy-description').text(vacancy.description);
         }
 
+
         // ...
     });
 
+</script>
+
+<script>
+    $(document).ready(function() {
+        var token = localStorage.getItem('token');
+
+        // Функция для отправки отклика на вакансию
+        function applyToVacancy(vacancyId) {
+            $.ajax({
+                url: '/api/vacancies/' + vacancyId + '/apply',
+                type: 'POST',
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                success: function(data) {
+                    console.log('Резюме успешно добавлено в вакансию');
+                    // Дополнительные действия после успешного добавления резюме в вакансию
+                },
+                error: function() {
+                    console.log('Ошибка при добавлении резюме в вакансию');
+                }
+            });
+        }
+
+        // Проверяем наличие токена
+        if (token) {
+            // При нажатии кнопки "Откликнуться"
+            $('#apply-button').on('click', function() {
+                var urlParams = new URLSearchParams(window.location.search);
+                var vacancyId = urlParams.get('vacancyId');
+                applyToVacancy(vacancyId);
+            });
+        } else {
+            // Редирект на страницу авторизации, если токен отсутствует
+            window.location.href = 'login.html';
+        }
+    });
 </script>
 
 <footer>

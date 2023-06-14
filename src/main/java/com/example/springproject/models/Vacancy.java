@@ -2,12 +2,14 @@ package com.example.springproject.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "vacancies")
 @Data
+@NoArgsConstructor
 public class Vacancy {
     @Id
     @SequenceGenerator(
@@ -32,8 +34,7 @@ public class Vacancy {
         this.salary = salary;
     }
 
-    public Vacancy() {
-    }
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -69,13 +70,13 @@ public class Vacancy {
     @Column
     private int salary;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "vacancy_applicants",
             joinColumns = @JoinColumn(name = "vacancy_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            inverseJoinColumns = @JoinColumn(name = "resume_id")
     )
-    private List<User> applicants;
+    private List<Resume> applicants;
 
 
 }
