@@ -301,6 +301,15 @@
         $('#vacancyResults').append(vacancyCard);
       });
     }
+    $('#vacancyResults').on('click', '.vacancy-card', function() {
+      // Получаем ID выбранной вакансии
+      var vacancyId = $(this).data('vacancy-id');
+
+      // Перенаправляем пользователя на страницу vacancy.html с параметром vacancyId
+      window.location.href = 'my_vacancy.html?vacancyId=' + vacancyId;
+    });
+
+
   });
 
 </script>

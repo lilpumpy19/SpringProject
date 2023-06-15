@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя вакансия</title>
+
+  <link rel="stylesheet" href="style_my_vacancy.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <script src="script_my_vacancy.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+    <li><a id="home-link" href="#">Главная</a></li>
+    <li><a href="#" id="job_search">Поиск работы</a></li>
+    <li><a href="#" id ="employers">Работодатели</a></li>
+    <li><a href="#" id ="about-link">О нас</a></li>
+    <li><a href="#" id = "login-link">Войти</a></li>
+    <li><a href="#" id="register-link">Зарегистрироваться</a></li>
+    <li><a href="#" id="my_account">Мой аккаунт</a></li>
+    <li><a href="#" id="exit">Выход</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+
+  <section class="vacancy-section">
+    <h1>Название вакансии</h1>
+    <div class="vacancy-info">
+      <div class="vacancy-image">
+        <img src="" alt="Изображение вакансии">
+      </div>
+      <div class="vacancy-details">
+        <p><strong>Местоположение:</strong> <span class="vacancy-location"></span></p>
+        <p><strong>Зарплата:</strong> <span class="vacancy-salary"></span></p>
+        <p><strong>Описание:</strong> <span class="vacancy-description"></span></p>
+      </div>
+    </div>
+
+
+  <div class="buttons">
+    <button id="edit-vacancy">Изменить вакансию</button>
+    <button id="delete-vacancy">Удалить вакансию</button>
+    <button id="view-candidates">Посмотреть кандидатов</button>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2023 Job Search. Все права защищены.</p>
+</footer>
+</body>
+</html>
