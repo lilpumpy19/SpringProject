@@ -10,6 +10,7 @@
   <script src="script.js"></script>
   <script src="script_my_vacancy.js" defer></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
 <header>
@@ -56,8 +57,11 @@
   </div>
 </section>
 
+
 <script>
   $(document).ready(function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var vacancyId = urlParams.get('vacancyId');
     $('#view-candidates').click(function() {
       $.ajax({
         url: '/api/vacancies/' + vacancyId + '/applicants',
@@ -73,7 +77,11 @@
               candidateItem.append($('<p>').html('<strong>Имя:</strong> ' + candidate.name));
               candidateItem.append($('<p>').html('<strong>Фамилия:</strong> ' + candidate.surname));
               candidateItem.append($('<p>').html('<strong>Отчество:</strong> ' + candidate.patronymic));
-              candidateItem.append($('<p>').html('<strong>Дата рождения:</strong> ' + candidate.date));
+
+              // Форматирование даты с помощью Moment.js
+              var formattedDate = moment(candidate.date).format('DD-MM-YYYY');
+              candidateItem.append($('<p>').html('<strong>Дата рождения:</strong> ' + formattedDate));
+
               candidateItem.append($('<img>').attr('src', candidate.myPhoto).attr('alt', 'Фото'));
               candidateItem.append($('<p>').html('<strong>О себе:</strong> ' + candidate.aboutMe));
 
@@ -89,8 +97,8 @@
       });
     });
   });
-
 </script>
+
 
 <footer>
   <p>&copy; 2023 Job Search. Все права защищены.</p>
