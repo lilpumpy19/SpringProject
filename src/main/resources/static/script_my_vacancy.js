@@ -38,50 +38,27 @@ $(document).ready(function() {
     });
 
     $('#delete-vacancy').click(function() {
-        // Действия при нажатии на кнопку "Удалить вакансию"
-        // Например, вызов функции для удаления вакансии
-        deleteVacancy(vacancyId);
+        $.ajax({
+            url: '/api/vacancies/' + vacancyId,
+            method: 'DELETE',
+            success: function (response) {
+                console.log('vacancy successfully deleted');
+                window.location.href = 'my_account.html';
+                // Выполните дополнительные действия при успешном удалении
+            },
+            error: function (xhr, status, error) {
+                console.log('an error occurred while deleting a vacancy', error);
+            }
+        });
     });
 
-    // $('#view-candidates').click(function() {
-    //     $.ajax({
-    //         url: '/api/vacancies/ '+ vacancyId+'/applicants',
-    //         method: 'GET',
-    //         success: function(response) {
-    //             var candidates = response.candidates;
-    //             if (Array.isArray(candidates) && candidates.length > 0) {
-    //                 var candidatesList = $('#candidates-list');
-    //                 candidatesList.empty();
-    //
-    //                 candidates.forEach(function(candidate) {
-    //                     var candidateItem = $('<div>').addClass('candidate-item');
-    //                     candidateItem.append($('<p>').html('<strong>Имя:</strong> ' + candidate.name));
-    //                     candidateItem.append($('<p>').html('<strong>Фамилия:</strong> ' + candidate.surname));
-    //                     candidateItem.append($('<p>').html('<strong>Отчество:</strong> ' + candidate.patronymic));
-    //                     candidateItem.append($('<p>').html('<strong>Дата рождения:</strong> ' + candidate.date));
-    //                     candidateItem.append($('<img>').attr('src', candidate.myPhoto).attr('alt', 'Фото'));
-    //                     candidateItem.append($('<p>').html('<strong>О себе:</strong> ' + candidate.aboutMe));
-    //
-    //                     candidatesList.append(candidateItem);
-    //                 });
-    //             } else {
-    //                 console.log('Кандидаты не найдены.');
-    //             }
-    //         },
-    //         error: function() {
-    //             alert('Произошла ошибка при получении кандидатов.');
-    //         }
-    //     });
-    // });
+
+
+
+
+
 });
 
-function getVacancyIdFromURL() {
-    // Получите идентификатор вакансии из URL (например, через параметр запроса)
-    // Напишите код для извлечения идентификатора из URL
-    // Верните идентификатор
-}
 
-function deleteVacancy(vacancyId) {
-    // Напишите код для удаления вакансии с помощью запроса к серверу
-    // Обработайте успешное удаление и возможные ошибки
-}
+
+

@@ -77,6 +77,7 @@
               candidateItem.append($('<p>').html('<strong>Имя:</strong> ' + candidate.name));
               candidateItem.append($('<p>').html('<strong>Фамилия:</strong> ' + candidate.surname));
               candidateItem.append($('<p>').html('<strong>Отчество:</strong> ' + candidate.patronymic));
+              candidateItem.append($('<p>').html('<strong>Email:</strong> ' + candidate.email));
 
               // Форматирование даты с помощью Moment.js
               var formattedDate = moment(candidate.date).format('DD-MM-YYYY');

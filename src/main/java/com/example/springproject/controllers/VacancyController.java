@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -104,5 +105,12 @@ public class VacancyController {
     public List<Resume> getApplicantsByVacancyId(@PathVariable Long vacancyId) {
         return vacancyService.getApplicantsByVacancyId(vacancyId);
     }
+
+    @DeleteMapping("/{vacancyId}")
+    public ResponseEntity<String> deleteVacancy(@PathVariable Long vacancyId) {
+        vacancyService.deleteVacancyById(vacancyId);
+        return new ResponseEntity<>("Vacancy deleted successfully", HttpStatus.OK);
+    }
+
 
 }

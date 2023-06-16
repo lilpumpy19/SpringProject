@@ -51,4 +51,8 @@ public class VacancyService {
     public List<Resume> getApplicantsByVacancyId(Long vacancyId) {
         return vacancyRepository.findApplicantsByVacancyId(vacancyId);
     }
+
+    public void deleteVacancyById(Long vacancyId) {
+        vacancyRepository.deleteById(vacancyId);
+    }
 }
