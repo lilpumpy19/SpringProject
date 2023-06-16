@@ -100,4 +100,9 @@ public class VacancyController {
         return ResponseEntity.ok("Резюме успешно добавлено");
     }
 
+    @GetMapping("/{vacancyId}/applicants")
+    public List<Resume> getApplicantsByVacancyId(@PathVariable Long vacancyId) {
+        return vacancyService.getApplicantsByVacancyId(vacancyId);
+    }
+
 }

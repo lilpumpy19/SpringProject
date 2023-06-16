@@ -1,6 +1,8 @@
 package com.example.springproject.repositories;
+import com.example.springproject.models.Resume;
 import com.example.springproject.models.Vacancy;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -13,4 +15,7 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     List<Vacancy> findByJobTitleAndLocation(String jobTitle, String location);
 
     List<Vacancy> findByUserId(Long id);
+
+    @Query("SELECT v.applicants FROM Vacancy v WHERE v.id = :vacancyId")
+    List<Resume> findApplicantsByVacancyId(Long vacancyId);
 }

@@ -15,32 +15,32 @@
 <header>
   <nav>
     <ul>
-    <li><a id="home-link" href="#">Главная</a></li>
-    <li><a href="#" id="job_search">Поиск работы</a></li>
-    <li><a href="#" id ="employers">Работодатели</a></li>
-    <li><a href="#" id ="about-link">О нас</a></li>
-    <li><a href="#" id = "login-link">Войти</a></li>
-    <li><a href="#" id="register-link">Зарегистрироваться</a></li>
-    <li><a href="#" id="my_account">Мой аккаунт</a></li>
-    <li><a href="#" id="exit">Выход</a></li>
+      <li><a id="home-link" href="#">Главная</a></li>
+      <li><a href="#" id="job_search">Поиск работы</a></li>
+      <li><a href="#" id ="employers">Работодатели</a></li>
+      <li><a href="#" id ="about-link">О нас</a></li>
+      <li><a href="#" id = "login-link">Войти</a></li>
+      <li><a href="#" id="register-link">Зарегистрироваться</a></li>
+      <li><a href="#" id="my_account">Мой аккаунт</a></li>
+      <li><a href="#" id="exit">Выход</a></li>
     </ul>
   </nav>
 </header>
 
 
 
-  <section class="vacancy-section">
-    <h1>Название вакансии</h1>
-    <div class="vacancy-info">
-      <div class="vacancy-image">
-        <img src="" alt="Изображение вакансии">
-      </div>
-      <div class="vacancy-details">
-        <p><strong>Местоположение:</strong> <span class="vacancy-location"></span></p>
-        <p><strong>Зарплата:</strong> <span class="vacancy-salary"></span></p>
-        <p><strong>Описание:</strong> <span class="vacancy-description"></span></p>
-      </div>
+<section class="vacancy-section">
+  <h1>Название вакансии</h1>
+  <div class="vacancy-info">
+    <div class="vacancy-image">
+      <img src="" alt="Изображение вакансии">
     </div>
+    <div class="vacancy-details">
+      <p><strong>Местоположение:</strong> <span class="vacancy-location"></span></p>
+      <p><strong>Зарплата:</strong> <span class="vacancy-salary"></span></p>
+      <p><strong>Описание:</strong> <span class="vacancy-description"></span></p>
+    </div>
+  </div>
 
 
   <div class="buttons">
@@ -48,7 +48,49 @@
     <button id="delete-vacancy">Удалить вакансию</button>
     <button id="view-candidates">Посмотреть кандидатов</button>
   </div>
+  <div class="candidates-section">
+    <h2>Кандидаты</h2>
+    <div id="candidates-list">
+      <!-- Здесь будут добавлены данные кандидатов через AJAX -->
+    </div>
+  </div>
 </section>
+
+<script>
+  $(document).ready(function() {
+    $('#view-candidates').click(function() {
+      $.ajax({
+        url: '/api/vacancies/' + vacancyId + '/applicants',
+        method: 'GET',
+        success: function(response) {
+          var candidates = response;
+          if (Array.isArray(candidates) && candidates.length > 0) {
+            var candidatesList = $('#candidates-list');
+            candidatesList.empty();
+
+            candidates.forEach(function(candidate) {
+              var candidateItem = $('<div>').addClass('candidate-item');
+              candidateItem.append($('<p>').html('<strong>Имя:</strong> ' + candidate.name));
+              candidateItem.append($('<p>').html('<strong>Фамилия:</strong> ' + candidate.surname));
+              candidateItem.append($('<p>').html('<strong>Отчество:</strong> ' + candidate.patronymic));
+              candidateItem.append($('<p>').html('<strong>Дата рождения:</strong> ' + candidate.date));
+              candidateItem.append($('<img>').attr('src', candidate.myPhoto).attr('alt', 'Фото'));
+              candidateItem.append($('<p>').html('<strong>О себе:</strong> ' + candidate.aboutMe));
+
+              candidatesList.append(candidateItem);
+            });
+          } else {
+            console.log('Кандидаты не найдены.');
+          }
+        },
+        error: function() {
+          alert('Произошла ошибка при получении кандидатов.');
+        }
+      });
+    });
+  });
+
+</script>
 
 <footer>
   <p>&copy; 2023 Job Search. Все права защищены.</p>

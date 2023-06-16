@@ -1,5 +1,6 @@
 package com.example.springproject.services;
 
+import com.example.springproject.models.Resume;
 import com.example.springproject.models.User;
 import com.example.springproject.models.Vacancy;
 import com.example.springproject.repositories.VacancyRepository;
@@ -45,5 +46,9 @@ public class VacancyService {
 
     public List<Vacancy> getVacanciesByUserId(Long id) {
         return vacancyRepository.findByUserId(id);
+    }
+
+    public List<Resume> getApplicantsByVacancyId(Long vacancyId) {
+        return vacancyRepository.findApplicantsByVacancyId(vacancyId);
     }
 }
