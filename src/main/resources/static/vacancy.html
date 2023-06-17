@@ -15,7 +15,7 @@
         <ul>
             <li><a id="home-link" href="#">Главная</a></li>
             <li><a href="#" id="job_search">Поиск работы</a></li>
-            <li><a href="#" id ="employers">Работодатели</a></li>
+            <li><a href="#" id ="employers">Работодателям</a></li>
             <li><a href="#" id ="about-link">О нас</a></li>
             <li><a href="#" id = "login-link">Войти</a></li>
             <li><a href="#" id="register-link">Зарегистрироваться</a></li>
@@ -78,7 +78,7 @@
     $(document).ready(function() {
         var token = localStorage.getItem('token');
 
-        // Функция для отправки отклика на вакансию
+
         function applyToVacancy(vacancyId) {
             $.ajax({
                 url: '/api/vacancies/' + vacancyId + '/apply',
@@ -87,25 +87,22 @@
                     Authorization: 'Bearer ' + token
                 },
                 success: function(data) {
-                    console.log('Резюме успешно добавлено в вакансию');
-                    // Дополнительные действия после успешного добавления резюме в вакансию
+                    alert('Резюме успешно добавлено в вакансию');
                 },
                 error: function() {
-                    console.log('Ошибка при добавлении резюме в вакансию');
+                    alert('Ошибка при добавлении резюме в вакансию');
                 }
             });
         }
 
-        // Проверяем наличие токена
+
         if (token) {
-            // При нажатии кнопки "Откликнуться"
             $('#apply-button').on('click', function() {
                 var urlParams = new URLSearchParams(window.location.search);
                 var vacancyId = urlParams.get('vacancyId');
                 applyToVacancy(vacancyId);
             });
         } else {
-            // Редирект на страницу авторизации, если токен отсутствует
             window.location.href = 'login.html';
         }
     });
