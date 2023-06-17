@@ -3,7 +3,9 @@ package com.example.springproject.services;
 import com.example.springproject.models.Resume;
 import com.example.springproject.models.User;
 import com.example.springproject.models.Vacancy;
+import com.example.springproject.models.VacancyRequest;
 import com.example.springproject.repositories.VacancyRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +56,17 @@ public class VacancyService {
 
     public void deleteVacancyById(Long vacancyId) {
         vacancyRepository.deleteById(vacancyId);
+    }
+
+    public void updateVacancy(Long vacancyId, VacancyRequest vacancyRequest) {
+        Vacancy vacancy = vacancyRepository.findById(vacancyId)
+                .orElseThrow(() -> new EntityNotFoundException("Vacancy not found with ID: " + vacancyId));
+
+        vacancy.setJobTitle(vacancyRequest.getJobTitle());
+        vacancy.setLocation(vacancyRequest.getLocation());
+        vacancy.setSalary(vacancyRequest.getSalary());
+        vacancy.setDescription(vacancyRequest.getDescription());
+
+        vacancyRepository.save(vacancy);
     }
 }

@@ -3,6 +3,7 @@ package com.example.springproject.controllers;
 import com.example.springproject.models.*;
 import com.example.springproject.services.UserService;
 import com.example.springproject.services.VacancyService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -110,6 +111,18 @@ public class VacancyController {
     public ResponseEntity<String> deleteVacancy(@PathVariable Long vacancyId) {
         vacancyService.deleteVacancyById(vacancyId);
         return new ResponseEntity<>("Vacancy deleted successfully", HttpStatus.OK);
+    }
+
+    @PutMapping("/{vacancyId}")
+    public ResponseEntity<String> updateVacancy(@PathVariable Long vacancyId, @RequestBody VacancyRequest vacancyRequest) {
+        try {
+            vacancyService.updateVacancy(vacancyId, vacancyRequest);
+            return ResponseEntity.ok("Vacancy updated successfully.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

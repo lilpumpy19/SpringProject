@@ -31,7 +31,7 @@
 
 
 <section class="vacancy-section">
-  <h1>Название вакансии</h1>
+  <h1 class="vacancy-title">Название вакансии</h1>
   <div class="vacancy-info">
     <div class="vacancy-image">
       <img src="" alt="Изображение вакансии">
@@ -89,7 +89,7 @@
               candidatesList.append(candidateItem);
             });
           } else {
-            console.log('Кандидаты не найдены.');
+            alert('Кандидаты не найдены.');
           }
         },
         error: function() {
@@ -99,7 +99,59 @@
     });
   });
 </script>
+<script>
+  $(document).ready(function() {
+    $('#edit-vacancy').click(function() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var vacancyId = urlParams.get('vacancyId');
+      // Получаем текущие значения полей вакансии
+      var jobTitle = $('.vacancy-title').text();
+      var location = $('.vacancy-location').text();
+      var salary = $('.vacancy-salary').text();
+      var description = $('.vacancy-description').text();
 
+      // Заменяем содержимое элементов на поля ввода
+      $('.vacancy-title').html('<input type="text" class="edit-job-title" value="' + jobTitle + '">');
+      $('.vacancy-location').html('<input type="text" class="edit-location" value="' + location + '">');
+      $('.vacancy-salary').html('<input type="text" class="edit-salary" value="' + salary + '">');
+      $('.vacancy-description').html('<textarea class="edit-description">' + description + '</textarea>');
+
+      // Добавляем кнопку "Подтвердить" и обработчик события
+      $('.vacancy-details').append('<button class="confirm-edit">Подтвердить</button>');
+      $('.confirm-edit').click(function() {
+        // Получаем значения из полей ввода
+        var editedJobTitle = $('.edit-job-title').val();
+        var editedLocation = $('.edit-location').val();
+        var editedSalary = $('.edit-salary').val();
+        var editedDescription = $('.edit-description').val();
+
+        // Отправляем данные на сервер для обновления вакансии
+        $.ajax({
+          url: '/api/vacancies/' + vacancyId,
+          method: 'PUT',
+          contentType: 'application/json',
+          data:JSON.stringify( {
+            jobTitle: editedJobTitle,
+            location: editedLocation,
+            salary: editedSalary,
+            description: editedDescription
+          }),
+          success: function(response) {
+            // Обработка успешного обновления
+            // Например, перезагрузка страницы или обновление данных на странице
+            console.log('ssssssssssssiee')
+            window.location.reload();
+          },
+          error: function() {
+            // Обработка ошибки при обновлении вакансии
+            alert('Произошла ошибка при обновлении вакансии.');
+          }
+        });
+      });
+    });
+  });
+
+</script>
 
 <footer>
   <p>&copy; 2023 Job Search. Все права защищены.</p>

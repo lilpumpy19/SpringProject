@@ -32,9 +32,7 @@ $(document).ready(function() {
 
     // Обработчики кнопок
     $('#edit-vacancy').click(function() {
-        // Действия при нажатии на кнопку "Изменить вакансию"
-        // Например, перенаправление на страницу редактирования вакансии
-        window.location.href = '/edit-vacancy?id=' + vacancyId;
+
     });
 
     $('#delete-vacancy').click(function() {
