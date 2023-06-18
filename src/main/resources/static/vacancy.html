@@ -98,6 +98,7 @@
 
         if (token) {
             $('#apply-button').on('click', function() {
+
                 var urlParams = new URLSearchParams(window.location.search);
                 var vacancyId = urlParams.get('vacancyId');
                 applyToVacancy(vacancyId);
