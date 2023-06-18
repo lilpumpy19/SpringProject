@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -65,6 +66,17 @@ public class ResumeController {
         Resume savedResume = resumeService.save(resume);
 
         return ResponseEntity.ok(savedResume);
+    }
+
+    @DeleteMapping("/{resumeId}")
+    public ResponseEntity<String> deleteResume(@PathVariable Long resumeId) {
+        try {
+            resumeService.deleteResumeById(resumeId);
+            return ResponseEntity.ok("Resume deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete resume.");
+        }
     }
 
 

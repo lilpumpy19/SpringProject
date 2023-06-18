@@ -90,7 +90,8 @@ footer {
     cursor: pointer;
 }
 #view-vacancies{
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     background-color: #f44336;
     color: white;
     padding: 10px 15px;
@@ -99,5 +100,12 @@ footer {
 }
 .create-resume-button button:hover {
     background-color: #d32f2f;
+}
+.buttons button{
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
 }
 

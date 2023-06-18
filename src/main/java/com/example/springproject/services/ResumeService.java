@@ -36,7 +36,9 @@ public class ResumeService {
         return resumeRepository.findByUserId(id);
     }
 
-
+    public void deleteResumeById(Long resumeId) {
+        resumeRepository.deleteById(resumeId);
+    }
     // Другие методы, связанные с резюме
 }
 
