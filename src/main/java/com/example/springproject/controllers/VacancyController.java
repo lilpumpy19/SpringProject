@@ -126,4 +126,15 @@ public class VacancyController {
     }
 
 
+    @DeleteMapping("/{vacancyId}/applicants/{resumeId}")
+    public ResponseEntity<String> deleteApplicantFromVacancy(
+            @PathVariable Long vacancyId,
+            @PathVariable Long resumeId
+    ) {
+        vacancyService.deleteByResumeIdAndVacancyId(resumeId, vacancyId);
+        return new ResponseEntity<>("Applicant deleted from vacancy", HttpStatus.OK);
+    }
+
+
+
 }

@@ -78,16 +78,42 @@
               candidateItem.append($('<p>').html('<strong>Фамилия:</strong> ' + candidate.surname));
               candidateItem.append($('<p>').html('<strong>Отчество:</strong> ' + candidate.patronymic));
               candidateItem.append($('<p>').html('<strong>Email:</strong> ' + candidate.email));
-
-              // Форматирование даты с помощью Moment.js
               var formattedDate = moment(candidate.date).format('DD-MM-YYYY');
               candidateItem.append($('<p>').html('<strong>Дата рождения:</strong> ' + formattedDate));
-
               candidateItem.append($('<img>').attr('src', candidate.myPhoto).attr('alt', 'Фото'));
               candidateItem.append($('<p>').html('<strong>О себе:</strong> ' + candidate.aboutMe));
 
+              // Создаем невидимое поле для хранения идентификатора кандидата
+              var candidateIdField = $('<input>').attr('type', 'hidden').attr('name', 'candidateId').val(candidate.id);
+              candidateItem.append(candidateIdField);
+
+              // Создаем кнопку "Удалить" и добавляем обработчик события для удаления кандидата
+              var deleteButton = $('<button>').addClass('delete-candidate').text('Удалить');
+              deleteButton.click(function() {
+                var candidateId = $(this).siblings('input[name="candidateId"]').val();
+                $.ajax({
+                  url: '/api/vacancies/' + vacancyId + '/applicants/' + candidateId,
+                  method: 'DELETE',
+                  success: function(response) {
+                    // Обработка успешного удаления
+                    console.log('Связь vacancy_applicants успешно удалена.');
+                  },
+                  error: function() {
+                    // Обработка ошибки при удалении связи vacancy_applicants
+                    alert('Произошла ошибка при удалении связи vacancy_applicants.');
+                  }
+                });
+
+                // Здесь можно написать логику удаления кандидата с использованием идентификатора candidateId
+
+                // После удаления кандидата из списка, можно удалить соответствующий элемент из DOM
+                $(this).parent().remove();
+              });
+
+              candidateItem.append(deleteButton);
               candidatesList.append(candidateItem);
             });
+
           } else {
             alert('Кандидаты не найдены.');
           }

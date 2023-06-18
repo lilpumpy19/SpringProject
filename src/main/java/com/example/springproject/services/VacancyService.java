@@ -6,6 +6,7 @@ import com.example.springproject.models.Vacancy;
 import com.example.springproject.models.VacancyRequest;
 import com.example.springproject.repositories.VacancyRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +69,9 @@ public class VacancyService {
         vacancy.setDescription(vacancyRequest.getDescription());
 
         vacancyRepository.save(vacancy);
+    }
+    @Transactional
+    public void deleteByResumeIdAndVacancyId(Long resumeId, Long vacancyId) {
+        vacancyRepository.deleteApplicantByVacancyIdAndResumeId(resumeId, vacancyId);
     }
 }
