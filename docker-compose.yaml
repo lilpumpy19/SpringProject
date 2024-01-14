@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgres:16'
+    container_name: 'java-postgres'
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=0990'
+      - 'POSTGRES_DB=ermak'
+    ports:
+      - "${DB_PORT}:5432"
+
+  app:
+    build: ./
+    container_name: 'java_app'
+    depends_on:
+      - postgres
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ermak'
+      - 'SPRING_DATASOURCE_USERNAME=postgres'
+      - 'SPRING_DATASOURCE_PASSWORD=0990'
+    ports:
+      - "8080:8080"
+    restart: on-failure
